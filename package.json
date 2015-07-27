@@ -1,0 +1,27 @@
+{
+  "name": "@loopjs/launch-control",
+  "version": "0.0.0",
+  "description": "Remote control of Loop Drop using Novation Launch Control",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loopjs/launch-control.git"
+  },
+  "author": "Matt McKegg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/loopjs/launch-control/issues"
+  },
+  "homepage": "https://github.com/loopjs/launch-control#readme",
+  "dependencies": {
+    "geval": "^2.1.1",
+    "midi-port-holder": "^2.1.0",
+    "midi-stream": "^1.2.2",
+    "observ": "^0.2.0",
+    "observ-midi": "^2.1.0",
+    "observ-struct": "^6.0.0"
+  }
+}
