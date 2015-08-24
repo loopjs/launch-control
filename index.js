@@ -27,7 +27,7 @@ function LaunchControl (context, state) {
   // FIRST ROW OF KNOBS:
   var knobs = ObservMidi(port, {
     tempo: '184/21',
-    param2: '184/22',
+    swing: '184/22',
     param3: '184/23',
     param4: '184/24',
     param5: '184/25',
@@ -42,8 +42,14 @@ function LaunchControl (context, state) {
     }
   })
 
+
+  watchThrottle(knobs.swing, 20, function(value) {
+    if (value != null) {
+      state.swing.set(value / 128)
+    }
+  })
+
   var params = [
-    MidiParam(context, 'Launch Control > 2', throttle(knobs.param2)),
     MidiParam(context, 'Launch Control > 3', throttle(knobs.param3)),
     MidiParam(context, 'Launch Control > 4', throttle(knobs.param4)),
     MidiParam(context, 'Launch Control > 5', throttle(knobs.param5)),
@@ -68,7 +74,6 @@ function LaunchControl (context, state) {
     '184/45',
     '184/46',
     '184/47',
-    '184/48',
   ])
 
   volumes(function (values) {
@@ -93,10 +98,41 @@ function LaunchControl (context, state) {
 
   var controlButtons = LightStack(port, {
     clearOthers: '184/115',
-    suppressOthers: '184/114'
+    suppressOthers: '184/114',
+    tap: '152/28',
+    nudgeLeft: '184/116',
+    nudgeRight: '184/117'
   })
 
+  controlButtons.tap.light(light(0, 1))
   controlButtons.clearOthers.light(0)
+
+  controlButtons.tap(function (value) {
+    if (value) {
+      controlButtons.tap.flash(light(0,2))
+      context.actions.tapTempo()
+    }
+  })
+
+  controlButtons.nudgeLeft(function (value) {
+    if (value) {
+      controlButtons.nudgeLeft.turnOff = controlButtons.nudgeLeft.light(127)
+      context.speed.set(0.95)
+    } else {
+      controlButtons.nudgeLeft.turnOff()
+      context.speed.set(1)
+    }
+  })
+
+  controlButtons.nudgeRight(function (value) {
+    if (value) {
+      controlButtons.nudgeRight.turnOff = controlButtons.nudgeRight.light(127)
+      context.speed.set(1.05)
+    } else {
+      controlButtons.nudgeRight.turnOff()
+      context.speed.set(1)
+    }
+  })
 
   controlButtons.clearOthers(function (value) {
     if (value) {
@@ -159,7 +195,6 @@ function LaunchControl (context, state) {
     '152/25',
     '152/26',
     '152/27',
-    '152/28'
   ], ArrayStack([
     buttonBase, 
     buttonFlash
