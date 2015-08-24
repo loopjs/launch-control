@@ -22,6 +22,7 @@
     "midi-stream": "^1.2.2",
     "observ": "^0.2.0",
     "observ-midi": "^2.1.0",
-    "observ-struct": "^6.0.0"
+    "observ-struct": "^6.0.0",
+    "throttle-observ": "^1.1.0"
   }
 }

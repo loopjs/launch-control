@@ -9,7 +9,9 @@ var FlashArray = require('./lib/flash-array')
 var AnyTrigger = require('./lib/on-trigger')
 var LightStack = require('observ-midi/light-stack')
 var MidiParam = require('./lib/midi-to-param')
-var throttle = require('./lib/throttle-value')
+
+var watchThrottle = require('throttle-observ/watch')
+var throttle = require('throttle-observ')
 
 module.exports = LaunchControl
 
@@ -34,7 +36,7 @@ function LaunchControl (context, state) {
     param8: '184/28'
   })
 
-  throttle(knobs.tempo)(function(value) {
+  watchThrottle(knobs.tempo, 20, function(value) {
     if (value != null) {
       state.tempo.set(value+60)
     }
